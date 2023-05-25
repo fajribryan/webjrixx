@@ -32,7 +32,8 @@
 
 
 <body>
-
+<br>
+<br>
     <!-- Navbar & Carousel Start -->
     <div class="container-fluid">
 
@@ -42,7 +43,7 @@
             <!-- Inner -->
             <div class="carousel">
                 <!-- Single item -->
-                <div class="carousel-item active">
+                <!-- <div class="carousel-item active">
                     <video class="img-fluid" autoplay loop muted style="opacity: 0.8;">
                         <source src="assets/video/sea.mp4" type="video/mp4" />
                     </video>
@@ -75,12 +76,12 @@
                                                 <h1 class="text-white mb-0" data-toggle="counter-up"><?php echo $kondisisakit->kondisi; ?></h1>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- Inner -->
@@ -91,7 +92,13 @@
 
 
     <!-- table -->
-    <div class="container-fluid  wow fadeInUp" data-wow-delay="0.1s">
+   
+
+
+    <div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+    <div class="container-fluid  wow fadeInUp" data-wow-delay="0.7s">
         <div class="container">
             <div class="row g-5">
                 <div class="col">
@@ -117,9 +124,9 @@
                                             $kondisi = "table-danger";
                                         } else {
                                             $kondisi = "table-primary";
-                                        } {
-                                            $no = $no + 1;
                                         }
+                                        $no = $no + 1;
+
 
                                     ?>
 
@@ -137,13 +144,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5" style="height: 460px;">
-                    <div id="piechart" data-wow-delay="0.8s"></div>
-                </div>
             </div>
         </div>
     </div>
-
+    </div>
+  </div>
+<br>
+  <div class="row align-items-center">
+    <div class="col" style="height: 460px;">
+        <div id="piechart" data-wow-delay="0.8s"></div>
+    </div>
+    </div>
+  </div>
+</div>
     <!-- table End -->
 
 </body>
@@ -154,13 +167,13 @@
 
     .table {
         background-color: #C04000;
-        width: 600px;
+        width: 1000px;
         margin: auto;
     }
 
     .scroll-text {
         height: 300px;
-        width: 600px;
+        width: 1000px;
         overflow-x: hidden;
         background-color: #fff;
         margin: auto;
@@ -186,14 +199,14 @@
         if (count < 2) {
             var objDiv = document.getElementById("data");
             objDiv.scrollTop = objDiv.scrollTop + 1;
-            if (objDiv.scrollTop == (objDiv.scrollHeight - 400)) {
+            if (objDiv.scrollTop == (objDiv.scrollHeight - 300)) {
                 setTimeout(function() {
                     objDiv.scrollTop = 0;
                     count++;
                 }, 1200);
             }
             //set scrolling time start
-            my_time = setTimeout('pageScroll()', 10);
+            my_time = setTimeout('pageScroll()', 15);
             //set scrolling time end
         }
     }

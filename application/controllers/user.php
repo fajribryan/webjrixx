@@ -30,15 +30,24 @@ class user extends CI_Controller
     {
         $data['title'] = 'Edit Profile';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $this->Modeltable->editprofile($data);
         $this->load->view('layout/navbar', $data);
         $this->load->view('user/editprofile');
+    }
+    public function simpaneditprofile()
+    {
+        $email = $this->input->post('email');
+        $data = [
+            "nama" => $this->input->post('nama', true),
+            "img" => $this->input->post('img', true),
+        ];
+        $this->Modeltable->editprofile($data, $email);
+        redirect('user/profile');
     }
     public function editpassword()
     {
         $data['title'] = 'Change Password';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $this->Modeltable->editprofile($data);
+        // $this->Modeltable->editpassword($data);
         $this->form_validation->set_rules('currentpassword', 'Current Password', 'required|trim');
         $this->form_validation->set_rules('newpassword1', 'New Password', 'required|trim|matches[newpassword2]');
         $this->form_validation->set_rules('newpassword2', 'Confirm Password', 'required|trim|matches[newpassword1]');
@@ -61,6 +70,7 @@ class user extends CI_Controller
                     $this->db->set('password', $password_hash);
                     $this->db->where('email', $this->session->userdata('email'));
                     $this->db->update('user');
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Password Telah di ganti </div>');
                     redirect('user');
                 }
             }

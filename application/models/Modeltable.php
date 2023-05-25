@@ -15,6 +15,7 @@ class Modeltable extends CI_Model
             "Qty" => $this->input->post('Qty', true),
             "Expired" => $this->input->post('Expired', true),
             "Supplier" => $this->input->post('Supplier', true),
+            "nohp" => $this->input->post('nohp', true),
             "Cost" => $this->input->post('Cost', true)
         ];
         $this->db->insert('data_aset', $data);
@@ -145,7 +146,13 @@ class Modeltable extends CI_Model
     {
         return $this->db->get_where('sasaran', ['kode_konteks' => $kode_konteks])->result_array();
     }
-    public function editprofile()
+    public function editprofile($data, $email)
+    {
+        $this->db->where('email', $email);
+        $this->db->update('user', $data);
+        return TRUE;
+    }
+    public function editpassword()
     {
         $this->db->select('*');
         $this->db->from('user');
@@ -157,7 +164,6 @@ class Modeltable extends CI_Model
         $this->db->where('email', $this->input->post('email'));
         $this->db->update('user', $data);
     }
-
     public function kondisisehat()
     {
         $sql = "SELECT count(if(kondisi='sehat',kondisi,NULL)) as kondisi,
@@ -207,5 +213,73 @@ class Modeltable extends CI_Model
     public function deletesasaran($id_sasaran)
     {
         $this->db->delete('sasaran', ['id_sasaran' => $id_sasaran]);
+    }
+    public function dataaset()
+    {
+        $this->db->select('Aset');
+        $this->db->from('data_aset');
+    }
+/// pengelolaan data barang master
+    public function getallmasterbarang()
+    {
+        return $this->db->get('table_master')->result_array();
+    }
+    public function tambahbarang()
+    {
+        $data = [
+            "kode_barang" => $this->input->post('kode_barang'),
+            "nama_barang" => $this->input->post('nama_barang'),
+            "harga" => $this->input->post('harga'),
+            "stok" => $this->input->post('stok'),
+        ];
+        $this->db->insert('table_master', $data);
+    }
+    public function deletebarang($kode_barang)
+    {
+        $this->db->delete('table_master', ['kode_barang' => $kode_barang]);
+    }
+    public function getbarang($kode_barang)
+    {
+        return $this->db->get_where('table_master', ['kode_barang' => $kode_barang])->row_array();
+    }
+    public function editbarang($data, $kode_barang)
+    {
+        $this->db->where('kode_barang', $kode_barang);
+        $this->db->update('table_master', $data);
+        return TRUE;
+    }
+    public function editbarangaset()
+    {
+        $data = [
+            "kode_barang" => $this->input->post('kode_barang'),
+            "nama_barang" => $this->input->post('nama_barang'),
+            "harga" => $this->input->post('harga'),
+            "stok" => $this->input->post('stok'),
+        ];
+        $this->db->where('kode_barang', $this->input->post('kode_barang'));
+        $this->db->update('table_master', $data);
+    }
+
+    public function tambahpenjualan()
+    {
+        $data = [
+            "tgl_faktur" => $this->input->post('tgl_faktur', true),
+            "no_faktur" => $this->input->post('no_faktur', true),
+            "nama_konsumen" => $this->input->post('nama_konsumen', true),
+            "kode_barang" => $this->input->post('kode_barang', true),
+            "jumlah" => $this->input->post('jumlah', true),
+            "harga" => $this->input->post('harga', true),
+            "harga_total" => $this->input->post('harga_total', true)
+        ];
+        $this->db->insert('table_penjualan', $data);
+    }
+    public function restok()
+    {
+        $data = [
+            "kode_barang" => $this->input->post('kode_barang', true),
+            "jumlah" => $this->input->post('jumlah', true),
+            "tgl_beli" => $this->input->post('tgl_beli', true),
+        ];
+        $this->db->insert('restok_barang', $data);
     }
 }

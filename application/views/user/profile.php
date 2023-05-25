@@ -81,9 +81,9 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editprofile">
-                                Edit
-                            </button>
+                            <a href="<?= base_url(); ?>user/editprofile" class="btn btn-success">
+                                Edit Profile
+                            </a>
                         </div>
                     </div>
                 </div>

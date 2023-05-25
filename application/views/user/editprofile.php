@@ -54,54 +54,54 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <?= form_open_multipart('user/editprofile'); ?>
-                        <div class="row">
+                <form class="form-horizontal" action="<?php echo base_url('user/simpaneditprofile') ?>" method="post" enctype="multipart/form-data" role="form">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <hr>
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" id="nama" class="form-control" value="<?= $user['nama']; ?>">
+                                </div>
+                            </div>
                             <hr>
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" disabled class="form-control" value="<?= $user['email']; ?>">
+                                </div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="text" id="nama" class="form-control" value="<?= $user['nama']; ?>">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Member Since</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <?= date('d F Y', $user['date_created']); ?>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0"> Change Photo Profile</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" id="img" name="img">
+                                </div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="text" disabled class="form-control" value="<?= $user['email']; ?>">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Member Since</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <?= date('d F Y', $user['date_created']); ?>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0"> Change Photo Profile</h6>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control" id="img" name="img">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button type="submit" class="btn btn-info " target="__blank">Submit</button>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </form>
                 <div class="row gutters-sm">
                     <div class="col-sm-6 mb-3">
                         <div class="card h-100">

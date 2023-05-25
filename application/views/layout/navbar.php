@@ -6,6 +6,7 @@
 <link href="<?= base_url(); ?>/assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
+<link rel="stylesheet" href="<?= base_url(); ?>template/dist/sweetalert.css">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -58,29 +59,28 @@
                         <a class="dropdown-item" href="<?= base_url('auth/logout'); ?>"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
                     </div>
                     </li>
+
                     <li class="has-submenu">
                         <a href="<?= base_url('user'); ?>"><i class="mdi mdi-airplay"></i>Dashboard</a>
                     </li>
 
                     <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-layers"></i>Advanced UI</a>
+                        <a href="#"><i class="mdi mdi-collage"></i>Konteks Resiko</a>
                         <ul class="submenu">
                             <li><a href="<?= base_url(); ?>erdcontroller">Konteks Resiko</a></li>
                             <li><a href="<?= base_url(); ?>erdcontroller/erd">ERD</a></li>
-                            <li><a href="<?= base_url(); ?>Siswa">Data</a></li>
-                            <li><a href="">Range Slider</a></li>
                         </ul>
                     </li>
 
                     <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-bullseye"></i>User Interface</a>
+                        <a href="#"><i class="mdi mdi-bullseye"></i> Others </a>
                         <ul class="submenu megamenu">
                             <li>
                                 <ul>
-                                    <li><a href="">Progress Bars</a></li>
-                                    <li><a href="">Dropdowns</a></li>
-                                    <li><a href="">Lightbox</a></li>
-                                    <li><a href="">Navs</a></li>
+                                    <li><a href="<?= base_url(); ?>Siswa"> Data </a></li>
+                                    <li><a href="<?= base_url(); ?>laundry">Laundryku</a></li>
+                                    <li><a href="<?= base_url(); ?>master_barang">Pengelolaan Data Barang</a></li>
+                                    <li><a href="<?= base_url(); ?>penjualan">Penjualan</a></li>
                                     <li><a href="">Pagination</a></li>
                                     <li><a href="">Popover & Tooltips</a></li>
                                 </ul>
@@ -95,7 +95,6 @@
     </div> <!-- end navbar-custom -->
 </header>
 <!-- End Navigation Bar-->
-
 
 
 
@@ -120,3 +119,5 @@
         $(this).next('.custom-file-label').addClass("selected").html(filename);
     });
 </script>
+<script src="<?php echo base_url() ?>template/dist/sweetalert.min.js"></script>
+<script src="<?php echo base_url() ?>template/dist/sweetalert-dev.js"></script>

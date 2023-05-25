@@ -35,6 +35,13 @@
                     </div>
                     <div class="form-group">
                         <div class="col-auto">
+                            <label for="nohp" class="col-form-label">No Handphone</label>
+                            <input type="text" name="nohp" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-auto">
                             <label for="Cost" class="col-form-label">Cost</label>
                             <input type="number" id="Cost" name="Cost" class="form-control">
                         </div>

@@ -13,7 +13,7 @@ class erdcontroller extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['konteks'] = $this->Modeltable->getkonteks();
         $this->load->view('layout/navbar', $data);
-        $this->load->view('konteks', $data);
+        $this->load->view('erd/konteks', $data);
     }
     public function erd($kode_konteks)
     {
@@ -27,24 +27,28 @@ class erdcontroller extends CI_Controller
         $data['sasaran1'] = $this->Modeltable->getsasaran($kode_konteks);
         $data['judul'] = 'Konteks Resiko';
         $this->load->view('layout/navbar', $data);
-        $this->load->view('erd', $data);
+        $this->load->view('erd/erd', $data);
     }
 
     public function simpankonteks()
     {
         $this->Modeltable->tambahkonteks();
+        $this->session->set_flashdata('flash', 'Ditambahkan');
         redirect('erdcontroller');
     }
     public function simpansasaran()
     {
         $data = array('kode_konteks' => $this->Modeltable->data_sasaran());
+
         $this->Modeltable->tambahsasaran();
+        $this->session->set_flashdata('flash', 'Ditambahkan');
         redirect('erdcontroller', $data);
     }
     public function simpaninisiatif()
     {
         $data = array('kode_konteks' => $this->Modeltable->data_inisiatif());
         $this->Modeltable->tambahinisiatif();
+        $this->session->set_flashdata('flash', 'Ditambahkan');
         redirect('erdcontroller', $data);
     }
     public function editsasaran()
@@ -55,6 +59,7 @@ class erdcontroller extends CI_Controller
             'kode' => $this->input->post('kode')
         ];
         $this->Modeltable->editsasaranbyid($data, $id_sasaran);
+        $this->session->set_flashdata('flash', 'Di Edit');
         redirect('erdcontroller');
     }
     public function editsasaranbyid($id_sasaran)
@@ -63,7 +68,7 @@ class erdcontroller extends CI_Controller
         $data['sasaran1'] = $this->Modeltable->getsasaran($id_sasaran);
 
         $this->load->view('layout/navbar', $data);
-        $this->load->view('editsasaran', $data);
+        $this->load->view('erd/editsasaran', $data);
     }
     public function editinisiatif()
     {
@@ -73,6 +78,7 @@ class erdcontroller extends CI_Controller
             'kode' => $this->input->post('kode')
         ];
         $this->Modeltable->editinisiatifbyid($data, $id_inisiatif);
+        $this->session->set_flashdata('flash', 'Di Edit');
         redirect('erdcontroller');
     }
     public function editinisiatifbyid($id_inisiatif)
@@ -81,18 +87,20 @@ class erdcontroller extends CI_Controller
         $data['inisiatif1'] = $this->Modeltable->getinisiatif($id_inisiatif);
 
         $this->load->view('layout/navbar', $data);
-        $this->load->view('editinisiatif', $data);
+        $this->load->view('erd/editinisiatif', $data);
     }
     public function deleteinisiatif($id_inisiatif)
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->Modeltable->deleteinisiatif($id_inisiatif);
+        $this->session->set_flashdata('flash', ' Dihapus');
         redirect('erdcontroller');
     }
     public function deletesasaran($id_sasaran)
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $this->Modeltable->deletesasaran($id_sasaran);
+        $this->session->set_flashdata('flash', ' Dihapus');
         redirect('erdcontroller');
     }
 }

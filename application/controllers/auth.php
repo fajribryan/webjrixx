@@ -71,48 +71,90 @@ class auth extends CI_Controller
             $this->load->view('layout/header', $data);
             $this->load->view('auth/register', $data);
         } else {
+            $email = $this->input->post('email', true);
             $data = [
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
-                'email' => htmlspecialchars($this->input->post('email', true)),
+                'email' => htmlspecialchars($email),
                 'img' => 'default.jpg',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
                 'is_active' => 0,
                 'date_created' => time(),
             ];
-            $this->db->insert('user', $data);
+            //siapkan token 
+            $token = base64_encode(random_bytes(4));
+            $user_token = [
+                'email' => $email,
+                'token' => $token,
+                'date_created' => time()
+            ];
 
-            // $this->_sendEmail();
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun telah berhasil di buat. Silahkan Login kembali</div>');
+            $this->db->insert('user', $data);
+            $this->db->insert('user_token', $user_token);
+
+            $this->_sendEmail($token, 'verify');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun telah berhasil di buat. Silahkan Cek Email untuk Aktivasi akun </div>');
             redirect('auth');
         }
     }
-    // private function _sendEmail()
-    // {
-    //     $config = [
-    //         'protocol' => 'smtp',
-    //         'smtp_host' => 'ssl://smtp.gmail.com',
-    //         'smtp_user' => 'mbryanpratama@gmail.com',
-    //         'smtp_pass' => 'Fajri2001',
-    //         'smtp_port' => 465,
-    //         'mailtype' => 'hmtl',
-    //         'charset' => 'utf-8',
-    //         'newline' => "\r\n"
-    //     ];
-    //     $this->load->library('email', $config);
-    //     $this->email->initialize($config);
-    //     $this->email->from('mbryanpratama@gmail.com', 'M Fajri Bryan Pratama');
-    //     $this->email->to('mfajribp@gmail.com');
-    //     $this->email->subject('Test');
-    //     $this->email->message('Hello');
+    private function _sendEmail($token, $type)
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_user' => 'mbryanpratama@gmail.com',
+            'smtp_pass' => 'smhdlavbtqoitxtz',
+            'smtp_port' => 465,
+            'mailtype' => 'hmtl',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+        $this->email->from('mbryanpratama@gmail.com', 'WEBJRIX KEREN');
+        $this->email->to($this->input->post('email'));
 
-    //     if ($this->email->send()) {
-    //         return true;
-    //     } else {
-    //         echo $this->email->print_debugger();
-    //         die;
-    //     }
-    // }
+        if ($type == 'verify') {
+
+            $this->email->subject('Account Verification');
+            $this->email->message('Jalankan Link dibawah ini : ' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"');
+        }
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
+    public function verify()
+    {
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        if ($user) {
+            $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
+
+            if ($user_token) {
+                $this->db->set('is_active', 1);
+                $this->db->where('email', $email);
+                $this->db->update('user');
+                $this->db->delete('user_token', ['email' => $email]);
+            } else {
+                $this->db->set('is_active', 1);
+                $this->db->where('email', $email);
+                $this->db->update('user');
+                $this->db->delete('user_token', ['email' => $email]);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Aktivasi Berhasil ! Silahkan Login</div>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Akun aktivasi gagal!!! </div>');
+            redirect('auth');
+        }
+    }
 
     public function logout()
     {
